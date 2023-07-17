@@ -1,0 +1,4 @@
+# Wordle Wizard Assistant
+Streamlit Cloud web app deployment of a derivation of the Wordle Wizard backend. See [Wordle Wizard repo](https://github.com/kmaurinjones/wordle_wizard) for more details of original solving algorithm and development process. This app and version of the algorithm are modified to a) scrape the daily Wordle solution ("target") word, and b) take user input as guesses for each word, and provide helpful hints as to the most statistically optimal next word for the given puzzle.
+
+If you have any questions about this app or would like to request any new features, please contact me at my email address at kmaurinjones@gmail.com
