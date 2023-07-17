@@ -1,4 +1,4 @@
-from wordle_functions import *
+from wordle_assistant_functions import *
 import pandas as pd
 import streamlit as st
 import plotly.express as px
