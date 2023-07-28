@@ -53,7 +53,7 @@ num_guesses = st.sidebar.selectbox(
 guesses = []
 for i in range(num_guesses):
     input_guess = st.text_input(f"Guess #{i+1}", '')
-    guesses.append(input_guess.strip())
+    guesses.append(input_guess.strip().lower())
     st.write(f"Guess #{i+1}: {input_guess}")
 
 #### CHECKING THAT ALL GUESSES ARE VALID
