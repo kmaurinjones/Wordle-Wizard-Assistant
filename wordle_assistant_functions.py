@@ -353,7 +353,7 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 
 #     Returns:
 #     ------
-#     `stats_dict`: dict
+#     `# stats_dict`: dict
 #         dictionary containing various statistics about the function's performance trying to solve the puzzle
 #     """
 
@@ -385,23 +385,23 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 #         randomint_target = random.randint(0, len(word_list) - 1)
 #         target = word_list[randomint_target]
 
-#     stats_dict = {}
-#     stats_dict['first_guess'] = guess
-#     stats_dict['target_word'] = target
-#     stats_dict['first_guess_vowels'] = float(count_vows_cons(guess, y_vow = True)['vows'])
-#     stats_dict['first_guess_consonants'] = float(count_vows_cons(guess, y_vow = True)['cons'])
-#     stats_dict['target_vowels'] = float(count_vows_cons(target, y_vow = True)['vows'])
-#     stats_dict['target_consonants'] = float(count_vows_cons(target, y_vow = True)['cons'])
+#     # stats_dict = {}
+#     # stats_dict['first_guess'] = guess
+#     # stats_dict['target_word'] = target
+#     # stats_dict['first_guess_vowels'] = float(count_vows_cons(guess, y_vow = True)['vows'])
+#     # stats_dict['first_guess_consonants'] = float(count_vows_cons(guess, y_vow = True)['cons'])
+#     # stats_dict['target_vowels'] = float(count_vows_cons(target, y_vow = True)['vows'])
+#     # stats_dict['target_consonants'] = float(count_vows_cons(target, y_vow = True)['cons'])
     
 #     # get rating of the first guess word and target word in the entire word_list
 #     for tup in get_word_rating(word_list, word_list, normalized = True):
 #         if tup[0] == guess:
-#             stats_dict['first_guess_rating'] = tup[1]
+#             # stats_dict['first_guess_rating'] = tup[1]
 #         if tup[0] == target:
-#             stats_dict['target_rating'] = tup[1]
+#             # stats_dict['target_rating'] = tup[1]
 
 #     guess_entropies = []
-#     guess_entropies.append(stats_dict['first_guess_rating'])
+#     guess_entropies.append(# stats_dict['first_guess_rating'])
 
 #     # luck_guess_1 = round(1 - ((1 / len(word_list)) * guess_entropies[0] / 100), 2) * 100
 
@@ -450,7 +450,7 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 #                 print("-----------------------------\n")
 
 #         if guess == target:
-#             stats_dict['target_guessed'] = True
+#             # stats_dict['target_guessed'] = True
 #             if return_stats == False:
 #                 if guess_num == 1:
 #                     # print(f"Congratulations! The Wordle has been solved in {guess_num} guess, that's amazingly lucky!")
@@ -707,7 +707,7 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 #         #### Guess has now been made -- what to do next
 #         if guess_num == max_guesses: # if at max guesses allowed
 #             guessed_words.append(guess)
-#             stats_dict['target_guessed'] = False
+#             # stats_dict['target_guessed'] = False
 #             if return_stats == False:
 #                 if verbose == True:
 #                     print("-----------------------------\n")
@@ -719,7 +719,7 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 #                     print(f"The target word was '{target}'.\n")
 #             break
 #         else: # if not at max guesses yet allowed
-#             # stats_dict['target_guessed'] = False
+#             # # stats_dict['target_guessed'] = False
 #             if return_stats == False:
 #                 if verbose == True:
 #                     print(f"Next guess:\n\t'{guess}'")
@@ -728,7 +728,7 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 #         if guess == target:
 #             guess_num += 1
 #             guessed_words.append(guess)
-#             stats_dict['target_guessed'] = True
+#             # stats_dict['target_guessed'] = True
 
 #             if return_stats == False:
 #                 print(f"**Guess {guess_num}: '{guess}'**\n")
@@ -740,7 +740,7 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 #                     print(f"There were still {max_guesses - guess_num} guesses remaining.")
 
 #             if return_stats == False:   
-#                 # stats_dict['target_guessed'] = True                 
+#                 # # stats_dict['target_guessed'] = True                 
 #                 print(f"\nThe target word was **'{target}'**.")
 #                 print("\n-----------------------------")
 #             break
@@ -761,15 +761,15 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 #         avg_wrong_pos_letters += wrong_pos_per_guess[i]
 #         avg_wrong_letters += wrong_letts_per_guess[i]
 
-#     stats_dict['mid_guesses_avg_vows'] = float(round(mid_guesses_vows / len(guessed_words), 2))
-#     stats_dict['mid_guesses_avg_cons'] = float(round(mid_guesses_cons / len(guessed_words), 2))
+#     # stats_dict['mid_guesses_avg_vows'] = float(round(mid_guesses_vows / len(guessed_words), 2))
+#     # stats_dict['mid_guesses_avg_cons'] = float(round(mid_guesses_cons / len(guessed_words), 2))
 
-#     stats_dict['avg_perf_letters'] = float(round(np.mean(avg_perf_letters), 2))
-#     stats_dict['avg_wrong_pos_letters'] = float(round(np.mean(avg_wrong_pos_letters), 2))
-#     stats_dict['avg_wrong_letters'] = float(round(np.mean(avg_wrong_letters), 2))
+#     # stats_dict['avg_perf_letters'] = float(round(np.mean(avg_perf_letters), 2))
+#     # stats_dict['avg_wrong_pos_letters'] = float(round(np.mean(avg_wrong_pos_letters), 2))
+#     # stats_dict['avg_wrong_letters'] = float(round(np.mean(avg_wrong_letters), 2))
     
 #     # average number of words remaining after each guess -- the higher this is, the luckier the person got (the lower, the more guesses it took)
-#     stats_dict['avg_remaining'] = float(round(np.mean(reduction_per_guess), 2))
+#     # stats_dict['avg_remaining'] = float(round(np.mean(reduction_per_guess), 2))
 
 #     # avg rating of each guessed word relative to all other words possible at that moment -- this should consistently be 100 for the algorithm, but will be different for user
 #     if len(guess_entropies) > 1: # in case of guessing it correctly on the first try
@@ -778,16 +778,16 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 #             sum_entropies += rating
 
 #         average_rating = float(round(sum_entropies / len(guess_entropies), 2))
-#         stats_dict['avg_intermediate_guess_rating'] = average_rating
+#         # stats_dict['avg_intermediate_guess_rating'] = average_rating
 #     else:
-#         stats_dict['avg_intermediate_guess_rating'] = float(100)
+#         # stats_dict['avg_intermediate_guess_rating'] = float(100)
 
 #     expected_guesses = 3.85
 
 #     # guess_num = 3
 #     # average_rating = 95
-#     luck = round(1 - ((((guess_num / expected_guesses) * (stats_dict['avg_intermediate_guess_rating'] / 100)) / max_guesses) * 5), 2)
-#     stats_dict['luck'] = luck
+#     luck = round(1 - ((((guess_num / expected_guesses) * (# stats_dict['avg_intermediate_guess_rating'] / 100)) / max_guesses) * 5), 2)
+#     # stats_dict['luck'] = luck
 
 #     if record == True:
 #         if verbose == True:
@@ -801,14 +801,14 @@ def get_word_distribution(word_list: list, sort: str = "descending"):
 
 #     # if guess_num <= len(guess):
 #     if guess_num <= 6:
-#         stats_dict['valid_success'] = True
+#         # stats_dict['valid_success'] = True
 #     else:
-#         stats_dict['valid_success'] = False
+#         # stats_dict['valid_success'] = False
 
-#     stats_dict['num_guesses'] = float(guess_num)
+#     # stats_dict['num_guesses'] = float(guess_num)
 
 #     # if return_stats == True:
-#     #     return stats_dict
+#     #     return # stats_dict
 def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None, 
                   target: str = None,
                   random_guess: bool = False, random_target: bool = False, 
@@ -842,7 +842,7 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
 
     Returns:
     ------
-    `stats_dict`: dict
+    `# stats_dict`: dict
         dictionary containing various statistics about the function's performance trying to solve the puzzle
     """
 
@@ -858,23 +858,23 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
 
     guess = guesses[0]
 
-    stats_dict = {}
-    stats_dict['first_guess'] = guess
-    stats_dict['target_word'] = target
-    stats_dict['first_guess_vowels'] = float(count_vows_cons(guess, y_vow = True)['vows'])
-    stats_dict['first_guess_consonants'] = float(count_vows_cons(guess, y_vow = True)['cons'])
-    stats_dict['target_vowels'] = float(count_vows_cons(target, y_vow = True)['vows'])
-    stats_dict['target_consonants'] = float(count_vows_cons(target, y_vow = True)['cons'])
+    # stats_dict = {}
+    # stats_dict['first_guess'] = guess
+    # stats_dict['target_word'] = target
+    # stats_dict['first_guess_vowels'] = float(count_vows_cons(guess, y_vow = True)['vows'])
+    # stats_dict['first_guess_consonants'] = float(count_vows_cons(guess, y_vow = True)['cons'])
+    # stats_dict['target_vowels'] = float(count_vows_cons(target, y_vow = True)['vows'])
+    # stats_dict['target_consonants'] = float(count_vows_cons(target, y_vow = True)['cons'])
     
     # get rating of the first guess word and target word in the entire word_list
     for tup in get_word_rating(word_list, word_list, normalized = True):
         if tup[0] == guess:
-            stats_dict['first_guess_rating'] = tup[1]
+            # stats_dict['first_guess_rating'] = tup[1]
         if tup[0] == target:
-            stats_dict['target_rating'] = tup[1]
+            # stats_dict['target_rating'] = tup[1]
 
     guess_entropies = []
-    guess_entropies.append(stats_dict['first_guess_rating'])
+    guess_entropies.append(# stats_dict['first_guess_rating'])
 
     # luck_guess_1 = round(1 - ((1 / len(word_list)) * guess_entropies[0] / 100), 2) * 100
 
@@ -924,7 +924,7 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
                 st.write("-----------------------------\n")
 
         if guess == target:
-            stats_dict['target_guessed'] = True
+            # stats_dict['target_guessed'] = True
             if return_stats == False:
                 if guess_num == 1:
                     # st.write(f"Congratulations! The Wordle has been solved in {guess_num} guess, that's amazingly lucky!")
@@ -1124,7 +1124,6 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
                 if verbose == True:
                     st.write(f"All potential next guesses:\n\t{get_word_rating(words_to_rate = list(potential_next_guesses), word_list = word_list)}\n")
                     st.write(f"Words guessed so far:\n\t{guessed_words}.\n")
-                
                     st.write(f"The only remaining possible word is:\n\t'{list(potential_next_guesses)[0]}'")
                 
             # guess = list(potential_next_guesses)[0]
@@ -1186,7 +1185,7 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
         #### Guess has now been made -- what to do next
         if guess_num == max_guesses: # if at max guesses allowed
             guessed_words.append(guess)
-            stats_dict['target_guessed'] = False
+            # stats_dict['target_guessed'] = False
             if return_stats == False:
                 if verbose == True:
                     st.write("-----------------------------\n")
@@ -1198,7 +1197,7 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
                     st.write(f"The target word was '{target}'.\n")
             break
         else: # if not at max guesses yet allowed
-            # stats_dict['target_guessed'] = False
+            # # stats_dict['target_guessed'] = False
             if return_stats == False:
                 if verbose == True:
                     if len(potential_next_guesses) > 1:
@@ -1210,7 +1209,7 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
         if guess == target:
             guess_num += 1
             guessed_words.append(guess)
-            stats_dict['target_guessed'] = True
+            # stats_dict['target_guessed'] = True
 
             if return_stats == False:
                 st.write(f"**Guess {guess_num}: '{guess}'**\n")
@@ -1222,7 +1221,7 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
                     st.write(f"There were still {max_guesses - guess_num} guesses remaining.")
 
             if return_stats == False:   
-                # stats_dict['target_guessed'] = True                 
+                # # stats_dict['target_guessed'] = True                 
                 st.write(f"\nThe target word was **'{target}'**.")
                 st.write("\n-----------------------------")
             break
@@ -1243,15 +1242,15 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
         avg_wrong_pos_letters += wrong_pos_per_guess[i]
         avg_wrong_letters += wrong_letts_per_guess[i]
 
-    stats_dict['mid_guesses_avg_vows'] = float(round(mid_guesses_vows / len(guessed_words), 2))
-    stats_dict['mid_guesses_avg_cons'] = float(round(mid_guesses_cons / len(guessed_words), 2))
+    # stats_dict['mid_guesses_avg_vows'] = float(round(mid_guesses_vows / len(guessed_words), 2))
+    # stats_dict['mid_guesses_avg_cons'] = float(round(mid_guesses_cons / len(guessed_words), 2))
 
-    stats_dict['avg_perf_letters'] = float(round(np.mean(avg_perf_letters), 2))
-    stats_dict['avg_wrong_pos_letters'] = float(round(np.mean(avg_wrong_pos_letters), 2))
-    stats_dict['avg_wrong_letters'] = float(round(np.mean(avg_wrong_letters), 2))
+    # stats_dict['avg_perf_letters'] = float(round(np.mean(avg_perf_letters), 2))
+    # stats_dict['avg_wrong_pos_letters'] = float(round(np.mean(avg_wrong_pos_letters), 2))
+    # stats_dict['avg_wrong_letters'] = float(round(np.mean(avg_wrong_letters), 2))
     
     # average number of words remaining after each guess -- the higher this is, the luckier the person got (the lower, the more guesses it took)
-    stats_dict['avg_remaining'] = float(round(np.mean(reduction_per_guess), 2))
+    # stats_dict['avg_remaining'] = float(round(np.mean(reduction_per_guess), 2))
 
     # avg rating of each guessed word relative to all other words possible at that moment -- this should consistently be 100 for the algorithm, but will be different for user
     if len(guess_entropies) > 1: # in case of guessing it correctly on the first try
@@ -1260,16 +1259,16 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
             sum_entropies += rating
 
         average_rating = float(round(sum_entropies / len(guess_entropies), 2))
-        stats_dict['avg_intermediate_guess_rating'] = average_rating
+        # stats_dict['avg_intermediate_guess_rating'] = average_rating
     else:
-        stats_dict['avg_intermediate_guess_rating'] = float(100)
+        # stats_dict['avg_intermediate_guess_rating'] = float(100)
 
     expected_guesses = 3.85
 
     # guess_num = 3
     # average_rating = 95
-    luck = round(1 - ((((guess_num / expected_guesses) * (stats_dict['avg_intermediate_guess_rating'] / 100)) / max_guesses) * 5), 2)
-    stats_dict['luck'] = luck
+    luck = round(1 - ((((guess_num / expected_guesses) * (# stats_dict['avg_intermediate_guess_rating'] / 100)) / max_guesses) * 5), 2)
+    # stats_dict['luck'] = luck
 
     if record == True:
         if verbose == True:
@@ -1282,11 +1281,11 @@ def wordle_wizard_cheat(guesses: list, word_list: list, max_guesses: int = None,
                     fout.write(line + "\n") # write
 
     if guess_num <= 6:
-        stats_dict['valid_success'] = True
+        # stats_dict['valid_success'] = True
     else:
-        stats_dict['valid_success'] = False
+        # stats_dict['valid_success'] = False
 
-    stats_dict['num_guesses'] = float(guess_num)
+    # stats_dict['num_guesses'] = float(guess_num)
     
 ############################################################################################################################################################
 ############################################################################################################################################################
