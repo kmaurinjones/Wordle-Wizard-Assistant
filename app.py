@@ -53,8 +53,8 @@ num_guesses = st.sidebar.selectbox(
 guesses = []
 for i in range(num_guesses):
     input_guess = st.text_input(f"Guess #{i+1}", '')
-    guesses.append(input_guess)
-    st.write(f"Guess #1: {input_guess}")
+    guesses.append(input_guess.strip())
+    st.write(f"Guess #{i+1}: {input_guess}")
 
 #### CHECKING THAT ALL GUESSES ARE VALID
 def is_alphanumeric_and_of_length_5(guess):
