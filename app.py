@@ -4,43 +4,28 @@ import random # for showing random words
 from wordle_assistant_functions import * # for wordle solving
 import plotly.express as px # for plots
 from plots import * # for plots
+import requests
 
 ### for getting daily target word
 from bs4 import BeautifulSoup
 
-# !pip install selenium
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
+url = "https://www.tomsguide.com/news/what-is-todays-wordle-answer"
 
-# Configure ChromeOptions
-chrome_options = Options()
-chrome_options.add_argument("--headless") # Run Chrome in headless mode
-driver = webdriver.Chrome(options = chrome_options)
+response = requests.get(url)
 
-url = "https://screenrant.com/wordle-answers-updated-word-puzzle-guide/"
+if response.status_code != 200:
+    raise ConnectionError ("There was an error loading the solutions webpage.\nReload this page and try again, and if this issue persists, please contact me at kmaurinjones@gmail.com")
 
-# Navigate to the URL
-driver.get(url)
+soup = BeautifulSoup(response.content, "html.parser")
 
-# Get the page source
-html_content = driver.page_source
-  
-soup = BeautifulSoup(html_content, "html.parser")
-for item in soup.find_all('a'):
-    
-    item_link = item['href']
-
-    link_prefix = "https://screenrant.com/todays-wordle-answer-hints"
-
-    if item_link:
-        
-        if link_prefix in item_link:
-            good_item = item
-            break
-
-good_text = good_item.text
-target_word = good_text.split(" - ")[-1].lower() # something like "topaz"
+paras = soup.find_all("p")
+for para in paras:
+    text = para.text
+    bolds = [word.replace(".", "").strip() for word in text.split() if word.replace(".", "").strip().isupper()]
+    if len(bolds) == 1 and len(bolds[0]) == 5:
+        target_word = bolds[0]
+        print(target_word)
+        break
 
 ### Page header
 st.title("Wordle Wizard Assistant 🧙🚑")
@@ -59,34 +44,6 @@ for i in range(0, 20):
     ran_int = random.randint(0, len(official_words) - 1)
     word = official_words[ran_int]
     sugg_words.append(word)
-
-
-# ### for guess length validation of both guesses
-# valid_guesses = True
-    
-# ### Generate Examples Button
-# st.write('Please enter a starting word and a target word, and click the "Abracadabra" button to have the puzzle solved.\n')
-# st.write('If you would like some examples of words you can use, click the button below.\n')
-# # gen_egs = st.button('Show Me Words')
-
-# if st.button('Show Me Words', key = "button1"):
-#     st.write(f"There are {len(official_words)} in the official Wordle word list. Here are {len(sugg_words)} of them.")
-#     st.write(f"{sugg_words}\n")
-
-# # user starting word
-# starting_word = st.text_input("Enter your first guess here here")
-# starting_word = starting_word.strip().replace(" ", "").lower()
-# if len(starting_word) != 5:
-#     valid_guesses = False
-#     st.write('Please double check and make sure there are exactly 5 letters in the starting word.\n')
-
-# # user target word
-# target_word = st.text_input("Enter target word here")
-# target_word = target_word.strip().replace(" ", "").lower()
-# if len(target_word) != 5:
-#     valid_guesses = False
-#     st.write('Please double check and make sure there are exactly 5 letters in the target word.\n')
-
 
 #### USER PROVIDING GUESSES ####
 num_guesses = st.sidebar.selectbox(
