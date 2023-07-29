@@ -4,31 +4,8 @@ import random # for showing random words
 from wordle_assistant_functions import * # for wordle solving
 import plotly.express as px # for plots
 from plots import * # for plots
-import requests
-
-### for getting daily target word
 from bs4 import BeautifulSoup
-
-url = "https://www.tomsguide.com/news/what-is-todays-wordle-answer"
-
-response = requests.get(url)
-
-if response.status_code != 200:
-    raise ConnectionError ("There was an error loading the solutions webpage.\nReload this page and try again, and if this issue persists, please contact me at kmaurinjones@gmail.com")
-
-soup = BeautifulSoup(response.content, "html.parser")
-
-paras = soup.find_all("p")
-for para in paras:
-    text = para.text
-    bolds = [word.replace(".", "").strip() for word in text.split() if word.replace(".", "").strip().isupper()]
-    if len(bolds) == 1 and len(bolds[0]) == 5:
-        target_word = bolds[0]
-        print(target_word)
-        break
-
-### Page header
-st.title("Wordle Wizard Assistant 🧙🚑")
+import requests
 
 ### Loading in official word list
 official_words = []
@@ -45,45 +22,142 @@ for i in range(0, 20):
     word = official_words[ran_int]
     sugg_words.append(word)
 
-#### USER PROVIDING GUESSES ####
-num_guesses = st.sidebar.selectbox(
-    'How many guesses would you like to submit?',
-    (1, 2, 3, 4, 5))
+mode = st.selectbox('Select Mode', ('Universal Solver', 'Daily Puzzle Assistant'))
 
-guesses = []
-for i in range(num_guesses):
-    input_guess = st.text_input(f"Guess #{i+1}", '')
-    guesses.append(input_guess.strip().lower())
-    st.write(f"Guess #{i+1}: {input_guess}")
-
-#### CHECKING THAT ALL GUESSES ARE VALID
-def is_alphanumeric_and_of_length_5(guess):
-    stripped_guess = guess.strip()
-    return stripped_guess.isalpha() and len(stripped_guess) == 5 # no punctuation, no numbers, 5 letters in length
-
-# guesses = ["guess1", "guess 2", "guess3 ", " guess4", "guess5"]
-valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
-
-### Solving
-# solve_button = st.button('Abracadabra')
-if button('Abracadabra', key = "button2"): # button to make everything run
+if mode == 'Universal Solver':
+    st.write("""
+    Universal Solver: Enter any two words - a word to start the puzzle with (the first "guess"), 
+    and a target word for Wordle Wizard to find, and it'll solve the puzzle in the most statistically optimal way possible! 
+    You can see how your solution of a puzzle stacks up against an AI.
+    """)
     
-    #### CHECKING ALL GUESSES ARE LEGAL
-    if not valid_guesses:
-        st.write("Please check again that each guess only contains letters and is 5 letters in length. Once you have, click 'Abracadabra' to get feedback.")
+elif mode == 'Daily Puzzle Assistant':
+    st.write("""
+    Daily Puzzle Assistant: If you haven't solved today's puzzle yet, and would like a little nudge in the right direction, 
+    you can submit all the words you've currently guessed and this solver will give you the most statistically optimal next guess, 
+    that perfectly complements the words you've already tried. Like a little robot assistant!
+    """)
 
-    else: # if everything is legal, proceed to solving
+# then you can use the 'mode' variable to determine which block of code to run
+if mode == 'Universal Solver':
+    # Code for Universal Solver
 
-        #### ADDING UNSEEN WORDS TO OFFICIAL LIST (THIS SHOULD MINIMIZE OVERALL ERRORS)
-        for word in guesses:
-            if word not in guesses:
-                official_words.append(word)
+    # if mode 1 is chosen, do the following
 
-        #### RUN ALGORITHM
-        wordle_wizard_cheat(guesses = guesses, word_list = official_words, max_guesses = 6, 
-                        target = target_word,
-                        random_guess = False, random_target = False, 
-                        verbose = True, drama = 0, return_stats = False, record = False)
+    ### for guess length validation of both guesses
+    valid_guesses = True
+        
+    ### Generate Examples Button
+    st.write('Please enter a starting word and a target word, and click the "Abracadabra" button to have the puzzle solved.\n')
+    st.write('If you would like some examples of words you can use, click the button below.\n')
+
+    if st.button('Show Me Words', key = "button1"):
+        st.write(f"There are {len(official_words)} in the official Wordle word list. Here are {len(sugg_words)} of them.")
+        st.write(f"{sugg_words}\n")
+
+    # user starting word
+    starting_word = st.sidebar.text_input("Enter starting word here")
+    starting_word = starting_word.strip().replace(" ", "").lower()
+    if len(starting_word) != 5:
+        valid_guesses = False
+        st.write('Please double check and make sure there are exactly 5 letters in the starting word.\n')
+
+    # user target word
+    target_word = st.sidebar.text_input("Enter target word here")
+    target_word = target_word.strip().replace(" ", "").lower()
+    if len(target_word) != 5:
+        valid_guesses = False
+        st.write('Please double check and make sure there are exactly 5 letters in the target word.\n')
+
+    ### Solving
+    # solve_button = st.button('Abracadabra')
+    if button('Abracadabra', key = "button2"): # button to make everything run
+        if valid_guesses == True: # ensure words are the correct lengths
+            
+            # if (starting_word.isalpha() and target_word.isalpha()): # checking there's no punctuation
+            if not (starting_word.isalpha() and target_word.isalpha()): # if the passed words don't check every criterion
+                st.write("Please check again that the starting word and target word only contain letter and are both 5 letters in length. Once they are, click the 'Abracadabra' button once more.")
+            
+            else: # if all is right in the wordle wizard world
+                # if either of them isn't in the list, temporarily add them to the list. This doesn't impact things much and will save a ton of error headaches
+                if starting_word not in official_words:
+                    official_words.append(starting_word)
+                if target_word not in official_words:
+                    official_words.append(target_word)
+
+                # puzzle solution
+                wordle_wizard(word_list = official_words, max_guesses = 6, guess = starting_word, target = target_word, random_guess = False, random_target = False, verbose = True, drama = 0, return_stats = False, record = False)
+
+
+# if mode 2 is chosen, do the following - default to this mode
+
+### for getting daily target wor
+
+elif mode == 'Daily Puzzle Assistant':
+    # Code for Daily Puzzle Assistant
+
+    url = "https://www.tomsguide.com/news/what-is-todays-wordle-answer"
+
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        raise ConnectionError ("There was an error loading the solutions webpage.\nReload this page and try again, and if this issue persists, please contact me at kmaurinjones@gmail.com")
+
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    paras = soup.find_all("p")
+    for para in paras:
+        text = para.text
+        bolds = [word.replace(".", "").strip() for word in text.split() if word.replace(".", "").strip().isupper()]
+        if len(bolds) == 1 and len(bolds[0]) == 5:
+            target_word = bolds[0]
+            print(target_word)
+            break
+
+    ### Page header
+    st.title("Wordle Wizard Assistant 🧙🚑")
+
+    #### USER PROVIDING GUESSES ####
+    num_guesses = st.sidebar.selectbox(
+        'How many guesses would you like to submit?',
+        (1, 2, 3, 4, 5))
+
+    guesses = []
+    for i in range(num_guesses):
+        input_guess = st.text_input(f"Guess #{i+1}", '')
+        guesses.append(input_guess.strip().lower())
+        st.write(f"Guess #{i+1}: {input_guess}")
+
+    #### CHECKING THAT ALL GUESSES ARE VALID
+    def is_alphanumeric_and_of_length_5(guess):
+        stripped_guess = guess.strip()
+        return stripped_guess.isalpha() and len(stripped_guess) == 5 # no punctuation, no numbers, 5 letters in length
+
+    # guesses = ["guess1", "guess 2", "guess3 ", " guess4", "guess5"]
+    valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
+
+    ### Solving
+    # solve_button = st.button('Abracadabra')
+    if button('Abracadabra', key = "button2"): # button to make everything run
+        
+        #### CHECKING ALL GUESSES ARE LEGAL
+        if not valid_guesses:
+            st.write("Please check again that each guess only contains letters and is 5 letters in length. Once you have, click 'Abracadabra' to get feedback.")
+
+        else: # if everything is legal, proceed to solving
+
+            #### ADDING UNSEEN WORDS TO OFFICIAL LIST (THIS SHOULD MINIMIZE OVERALL ERRORS)
+            for word in guesses:
+                if word not in guesses:
+                    official_words.append(word)
+
+            #### RUN ALGORITHM
+            wordle_wizard_cheat(guesses = guesses, word_list = official_words, max_guesses = 6, 
+                            target = target_word,
+                            random_guess = False, random_target = False, 
+                            verbose = True, drama = 0, return_stats = False, record = False)
+            
+    if button('Abracadabra', key = "button2"): # button to make everything run
 
         # post-solution prompt
         st.write("Curious about what the number beside each word means? Click the button below to find out!")
