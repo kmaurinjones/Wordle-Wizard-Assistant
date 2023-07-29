@@ -50,7 +50,7 @@ if mode == 'Universal Solver':
     daily_sol_button = False
     # Code for Universal Solver
 
-    st.header("Universal Solver 🧙🚑")
+    st.header("Universal Solver")
 
     # if mode 1 is chosen, do the following
 
@@ -113,7 +113,7 @@ elif mode == 'Daily Puzzle Assistant':
     univers_button = False
     # Code for Daily Puzzle Assistant
 
-    st.header("Daily Puzzle Assistant 🧙🚑")
+    st.header("Daily Puzzle Assistant")
 
     url = "https://www.tomsguide.com/news/what-is-todays-wordle-answer"
 
