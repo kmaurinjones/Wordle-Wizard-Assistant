@@ -102,6 +102,7 @@ if mode == 'Universal Solver':
                 # puzzle solution
                 wordle_wizard(word_list = official_words, max_guesses = 6, guess = starting_word, target = target_word, random_guess = False, random_target = False, verbose = True, drama = 0, return_stats = False, record = False)
 
+                st.write("Curious about what the number beside each word means? Click the button below to find out!")
 
 # if mode 2 is chosen, do the following - default to this mode
 
@@ -137,7 +138,7 @@ elif mode == 'Daily Puzzle Assistant':
     # num_guesses = st.sidebar.selectbox(
     num_guesses = st.selectbox(
         'How many guesses would you like to submit?',
-        (1, 2, 3, 4, 5))
+        (1, 2, 3, 4, 5, 6))
 
     guesses = []
     for i in range(num_guesses):
@@ -176,13 +177,15 @@ elif mode == 'Daily Puzzle Assistant':
                             random_guess = False, random_target = False, 
                             verbose = True, drama = 0, return_stats = False, record = False)
             
+            st.write("Curious about what the number beside each word means? Click the button below to find out!")
+            
 if mode_chosen:
 
     # if button('Abracadabra', key = "button2_universal"): # button to make everything run
     if univers_button or daily_sol_button:
 
+        # st.write("Curious about what the number beside each word means? Click the button below to find out!")
         # post-solution prompt
-        st.write("Curious about what the number beside each word means? Click the button below to find out!")
 
         # show plot and info
         if button(label = "More info", key = "button3"):
