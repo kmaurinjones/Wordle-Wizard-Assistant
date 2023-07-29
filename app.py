@@ -104,6 +104,32 @@ if mode == 'Universal Solver':
 
                 st.write("Curious about what the number beside each word means? Click the button below to find out!")
 
+                                 
+                if mode_chosen:
+
+                    # if button('Abracadabra', key = "button2_universal"): # button to make everything run
+                    if univers_button or daily_sol_button:
+
+                        # st.write("Curious about what the number beside each word means? Click the button below to find out!")
+                        # post-solution prompt
+
+                        # show plot and info
+                        if button(label = "More info", key = "button3"):
+                            
+                            # show plot of letters distribution
+                            count_plot()
+
+                            st.write("This is a distribution of the frequencies of all letters in the Wordle word list used in this app. The higher a given letter's count is, the more likely it is that that letter will be able to tell us something about the target word in a Wordle puzzle.\n")
+                            st.write("The rating of each word corresponds to approximately the percentage of all words of the ~2300 words of the list used for this game in which the given word's letters appear. This means that, for a word with a rating of 30, its letters show up in 30\% of the words of the entire word list. Since we cannot possibly have all 26 letters of the English alphabet in one 5-letter word, this rating can only really be used to compare one word to another. Using more highly-rated words should generally result in getting to the target word in fewer guesses than using lower-rated words.\n")
+
+                            # show plot of best and worst words
+                            words_plot()
+
+                            st.write("By this same rating system, here are the top 5 words, the middle 5 words, and the worst 5 words of the entire Wordle word list in terms of their respective ratings.\n\n")
+                            st.write("If you're interested in learning more about the theory of how Wordle Wizard actually works, check out this blog post (https://medium.com/@kmaurinjones/how-i-beat-wordle-once-and-for-all-322c8641a70d), that describes everything mentioned here (and more!) in greater detail.\n")
+
+                            st.write("-----------------------------\n")
+
 # if mode 2 is chosen, do the following - default to this mode
 
 ### for getting daily target wor
@@ -178,30 +204,30 @@ elif mode == 'Daily Puzzle Assistant':
                             verbose = True, drama = 0, return_stats = False, record = False)
             
             st.write("Curious about what the number beside each word means? Click the button below to find out!")
-            
-if mode_chosen:
+                        
+            if mode_chosen:
 
-    # if button('Abracadabra', key = "button2_universal"): # button to make everything run
-    if univers_button or daily_sol_button:
+                # if button('Abracadabra', key = "button2_universal"): # button to make everything run
+                if univers_button or daily_sol_button:
 
-        # st.write("Curious about what the number beside each word means? Click the button below to find out!")
-        # post-solution prompt
+                    # st.write("Curious about what the number beside each word means? Click the button below to find out!")
+                    # post-solution prompt
 
-        # show plot and info
-        if button(label = "More info", key = "button3"):
-            
-            # show plot of letters distribution
-            count_plot()
+                    # show plot and info
+                    if button(label = "More info", key = "button3"):
+                        
+                        # show plot of letters distribution
+                        count_plot()
 
-            st.write("This is a distribution of the frequencies of all letters in the Wordle word list used in this app. The higher a given letter's count is, the more likely it is that that letter will be able to tell us something about the target word in a Wordle puzzle.\n")
-            st.write("The rating of each word corresponds to approximately the percentage of all words of the ~2300 words of the list used for this game in which the given word's letters appear. This means that, for a word with a rating of 30, its letters show up in 30\% of the words of the entire word list. Since we cannot possibly have all 26 letters of the English alphabet in one 5-letter word, this rating can only really be used to compare one word to another. Using more highly-rated words should generally result in getting to the target word in fewer guesses than using lower-rated words.\n")
+                        st.write("This is a distribution of the frequencies of all letters in the Wordle word list used in this app. The higher a given letter's count is, the more likely it is that that letter will be able to tell us something about the target word in a Wordle puzzle.\n")
+                        st.write("The rating of each word corresponds to approximately the percentage of all words of the ~2300 words of the list used for this game in which the given word's letters appear. This means that, for a word with a rating of 30, its letters show up in 30\% of the words of the entire word list. Since we cannot possibly have all 26 letters of the English alphabet in one 5-letter word, this rating can only really be used to compare one word to another. Using more highly-rated words should generally result in getting to the target word in fewer guesses than using lower-rated words.\n")
 
-            # show plot of best and worst words
-            words_plot()
+                        # show plot of best and worst words
+                        words_plot()
 
-            st.write("By this same rating system, here are the top 5 words, the middle 5 words, and the worst 5 words of the entire Wordle word list in terms of their respective ratings.\n\n")
-            st.write("If you're interested in learning more about the theory of how Wordle Wizard actually works, check out this blog post (https://medium.com/@kmaurinjones/how-i-beat-wordle-once-and-for-all-322c8641a70d), that describes everything mentioned here (and more!) in greater detail.\n")
+                        st.write("By this same rating system, here are the top 5 words, the middle 5 words, and the worst 5 words of the entire Wordle word list in terms of their respective ratings.\n\n")
+                        st.write("If you're interested in learning more about the theory of how Wordle Wizard actually works, check out this blog post (https://medium.com/@kmaurinjones/how-i-beat-wordle-once-and-for-all-322c8641a70d), that describes everything mentioned here (and more!) in greater detail.\n")
 
-            st.write("-----------------------------\n")
+                        st.write("-----------------------------\n")
 
 st.write("\nThanks for checking out Wordle Wizard! If you have any feedback or requests for additions to this app, shoot me an email at kmaurinjones@gmail.com.")
