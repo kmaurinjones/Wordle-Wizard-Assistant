@@ -7,6 +7,12 @@ from plots import * # for plots
 from bs4 import BeautifulSoup
 import requests
 
+
+### Page header
+st.title("Wordle Wizard Assistant 🧙🚑")
+# st.title("Wordle Wizard Assistant 🧙🚑")
+# st.title("Wordle Wizard Universal Solver 🧙🚑")
+
 ### Loading in official word list
 official_words = []
 with open("data/official_words_processed.txt", "r", encoding = "utf-8") as f:
@@ -42,6 +48,8 @@ elif mode == 'Daily Puzzle Assistant':
 if mode == 'Universal Solver':
     # Code for Universal Solver
 
+    st.title("Wordle Wizard Universal Solver 🧙🚑")
+
     # if mode 1 is chosen, do the following
 
     ### for guess length validation of both guesses
@@ -71,7 +79,7 @@ if mode == 'Universal Solver':
 
     ### Solving
     # solve_button = st.button('Abracadabra')
-    if button('Abracadabra', key = "button2"): # button to make everything run
+    if button('Abracadabra', key = "button2_universal"): # button to make everything run
         if valid_guesses == True: # ensure words are the correct lengths
             
             # if (starting_word.isalpha() and target_word.isalpha()): # checking there's no punctuation
@@ -96,6 +104,8 @@ if mode == 'Universal Solver':
 elif mode == 'Daily Puzzle Assistant':
     # Code for Daily Puzzle Assistant
 
+    st.title("Wordle Wizard Daily Puzzle Assistant 🧙🚑")
+
     url = "https://www.tomsguide.com/news/what-is-todays-wordle-answer"
 
     response = requests.get(url)
@@ -113,9 +123,6 @@ elif mode == 'Daily Puzzle Assistant':
             target_word = bolds[0]
             print(target_word)
             break
-
-    ### Page header
-    st.title("Wordle Wizard Assistant 🧙🚑")
 
     #### USER PROVIDING GUESSES ####
     num_guesses = st.sidebar.selectbox(
@@ -138,7 +145,7 @@ elif mode == 'Daily Puzzle Assistant':
 
     ### Solving
     # solve_button = st.button('Abracadabra')
-    if button('Abracadabra', key = "button2"): # button to make everything run
+    if button('Abracadabra', key = "button2_assistant"): # button to make everything run
         
         #### CHECKING ALL GUESSES ARE LEGAL
         if not valid_guesses:
