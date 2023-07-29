@@ -75,9 +75,11 @@ if mode == 'Universal Solver':
         valid_guesses = False
         st.write('Please double check and make sure there are exactly 5 letters in the target word.\n')
 
+    univers_button = button('Abracadabra', key = "button2_universal")
+
     ### Solving
     # solve_button = st.button('Abracadabra')
-    if button('Abracadabra', key = "button2_universal"): # button to make everything run
+    if univers_button: # button to make everything run
         if valid_guesses == True: # ensure words are the correct lengths
             
             # if (starting_word.isalpha() and target_word.isalpha()): # checking there's no punctuation
@@ -141,9 +143,11 @@ elif mode == 'Daily Puzzle Assistant':
     # guesses = ["guess1", "guess 2", "guess3 ", " guess4", "guess5"]
     valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
 
+    daily_sol_button = button('Abracadabra', key = "button2_assistant")
+
     ### Solving
     # solve_button = st.button('Abracadabra')
-    if button('Abracadabra', key = "button2_assistant"): # button to make everything run
+    if daily_sol_button: # button to make everything run
         
         #### CHECKING ALL GUESSES ARE LEGAL
         if not valid_guesses:
@@ -163,7 +167,7 @@ elif mode == 'Daily Puzzle Assistant':
                             verbose = True, drama = 0, return_stats = False, record = False)
             
 # if button('Abracadabra', key = "button2_universal"): # button to make everything run
-if button('Abracadabra'):
+if univers_button or daily_sol_button:
 
     # post-solution prompt
     st.write("Curious about what the number beside each word means? Click the button below to find out!")
