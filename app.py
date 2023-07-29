@@ -47,6 +47,7 @@ elif mode == 'Daily Puzzle Assistant':
 if mode == 'Universal Solver':
 
     mode_chosen = True
+    daily_sol_button = False
     # Code for Universal Solver
 
     st.title("Wordle Wizard Universal Solver 🧙🚑")
@@ -107,6 +108,7 @@ if mode == 'Universal Solver':
 elif mode == 'Daily Puzzle Assistant':
 
     mode_chosen = True
+    univers_button = False
     # Code for Daily Puzzle Assistant
 
     st.title("Wordle Wizard Daily Puzzle Assistant 🧙🚑")
@@ -172,7 +174,9 @@ elif mode == 'Daily Puzzle Assistant':
                             verbose = True, drama = 0, return_stats = False, record = False)
             
 if mode_chosen:
-    
+
+    if mode == ""
+
     # if button('Abracadabra', key = "button2_universal"): # button to make everything run
     if univers_button or daily_sol_button:
 
