@@ -175,8 +175,6 @@ elif mode == 'Daily Puzzle Assistant':
             
 if mode_chosen:
 
-    if mode == ""
-
     # if button('Abracadabra', key = "button2_universal"): # button to make everything run
     if univers_button or daily_sol_button:
 
