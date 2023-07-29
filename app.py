@@ -9,9 +9,7 @@ import requests
 
 
 ### Page header
-st.title("Wordle Wizard Assistant 🧙🚑")
-# st.title("Wordle Wizard Assistant 🧙🚑")
-# st.title("Wordle Wizard Universal Solver 🧙🚑")
+st.title("Wordle Wizard 🧙")
 
 ### Loading in official word list
 official_words = []
@@ -164,7 +162,7 @@ elif mode == 'Daily Puzzle Assistant':
                             random_guess = False, random_target = False, 
                             verbose = True, drama = 0, return_stats = False, record = False)
             
-    if button('Abracadabra', key = "button2"): # button to make everything run
+    if button('Abracadabra', key = "button2_universal") or button('Abracadabra', key = "button2_assistant"): # button to make everything run
 
         # post-solution prompt
         st.write("Curious about what the number beside each word means? Click the button below to find out!")
