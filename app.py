@@ -66,14 +66,16 @@ if mode == 'Universal Solver':
         st.write(f"{sugg_words}\n")
 
     # user starting word
-    starting_word = st.sidebar.text_input("Enter starting word here")
+    # starting_word = st.sidebar.text_input("Enter starting word here")
+    starting_word = st.text_input("Enter starting word here")
     starting_word = starting_word.strip().replace(" ", "").lower()
     if len(starting_word) != 5:
         valid_guesses = False
         st.write('Please double check and make sure there are exactly 5 letters in the starting word.\n')
 
     # user target word
-    target_word = st.sidebar.text_input("Enter target word here")
+    # target_word = st.sidebar.text_input("Enter target word here")
+    target_word = st.text_input("Enter target word here")
     target_word = target_word.strip().replace(" ", "").lower()
     if len(target_word) != 5:
         valid_guesses = False
@@ -132,7 +134,8 @@ elif mode == 'Daily Puzzle Assistant':
             break
 
     #### USER PROVIDING GUESSES ####
-    num_guesses = st.sidebar.selectbox(
+    # num_guesses = st.sidebar.selectbox(
+    num_guesses = st.selectbox(
         'How many guesses would you like to submit?',
         (1, 2, 3, 4, 5))
 
