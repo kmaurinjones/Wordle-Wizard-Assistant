@@ -654,7 +654,7 @@ def wordle_wizard(word_list: list, max_guesses: int = None,
                     print(f"The only remaining possible word is:\n\t'{list(potential_next_guesses)[0]}'\n")
                 
             guess = list(potential_next_guesses)[0]
-            guess_entropies.append(get_word_rating([guess], word_list, normalized = False, ascending = False)[0][1])
+            # guess_entropies.append(get_word_rating([guess], word_list, normalized = False, ascending = False)[0][1])
 
         else:
 
@@ -702,7 +702,7 @@ def wordle_wizard(word_list: list, max_guesses: int = None,
                         print(f"The top 40 potential next guesses are:\n\t{word_ratings[:40]}\n")
                         print(f"Words guessed so far:\n\t{guessed_words}.\n")
 
-            guess_entropies.append(get_word_rating([guess], word_list, normalized = False, ascending = False)[0][1])
+            # guess_entropies.append(get_word_rating([guess], word_list, normalized = False, ascending = False)[0][1])
 
         #### Guess has now been made -- what to do next
         if guess_num == max_guesses: # if at max guesses allowed
