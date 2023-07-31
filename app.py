@@ -39,7 +39,7 @@ if mode == 'Universal Solver':
 elif mode == 'Daily Puzzle Assistant':
     st.write("""
     If you haven't solved today's puzzle yet and would like a little nudge in the right direction, 
-    you can submit all the words you've currently guessed and I'll give you the most statistically optimal next guess, 
+    you can submit all the words you've currently guessed and I'll give you the most statistically optimal next guess
     that perfectly complements the words you've already tried. Like a little robot assistant!
     """)
 
@@ -130,7 +130,7 @@ if mode == 'Universal Solver':
 
                             st.write("-----------------------------\n")
 
-# if mode 2 is chosen, do the following - default to this mode
+# if mode 2 is chosen, do the following - default is this mode
 
 ### for getting daily target wor
 
