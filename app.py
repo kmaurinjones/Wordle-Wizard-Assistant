@@ -31,15 +31,15 @@ mode_chosen = False
 
 if mode == 'Universal Solver':
     st.write("""
-    Universal Solver: Enter any two words - a word to start the puzzle with (the first "guess"), 
-    and a target word for Wordle Wizard to find, and it'll solve the puzzle in the most statistically optimal way possible! 
-    You can see how your solution of a puzzle stacks up against an AI.
+    Enter any two words - a word to start the puzzle with (the first "guess"), 
+    and a target word for Wordle Wizard to find, and I'll solve the puzzle in the most statistically optimal way possible! 
+    See how your solution of a puzzle stacks up against an AI!"
     """)
     
 elif mode == 'Daily Puzzle Assistant':
     st.write("""
-    Daily Puzzle Assistant: If you haven't solved today's puzzle yet, and would like a little nudge in the right direction, 
-    you can submit all the words you've currently guessed and this solver will give you the most statistically optimal next guess, 
+    If you haven't solved today's puzzle yet and would like a little nudge in the right direction, 
+    you can submit all the words you've currently guessed and I'll give you the most statistically optimal next guess, 
     that perfectly complements the words you've already tried. Like a little robot assistant!
     """)
 
