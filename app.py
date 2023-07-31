@@ -26,7 +26,7 @@ for i in range(0, 20):
     word = official_words[ran_int]
     sugg_words.append(word)
 
-mode = st.selectbox('Select Mode', ('Universal Solver', 'Daily Puzzle Assistant'))
+mode = st.selectbox('Select Mode', ('Daily Puzzle Assistant', 'Universal Solver'))
 mode_chosen = False
 
 if mode == 'Universal Solver':
