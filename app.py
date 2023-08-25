@@ -293,6 +293,8 @@ elif mode == 'Daily Puzzle Assistant':
         if add_another_guess:
             st.session_state.num_guesses += 1
 
+    st.write("Once you have entered your guesses, click the button below.")
+
     # Display the Abracadabra button
     daily_sol_button = st.button('Abracadabra', key="button2_assistant")
 
@@ -310,7 +312,7 @@ elif mode == 'Daily Puzzle Assistant':
     if st.session_state.abracadabra_clicked:
         st.session_state.abracadabra_clicked = False
     
-        st.experimental_rerun()
+        # st.experimental_rerun()
 
         # Check validity of guesses
         valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
