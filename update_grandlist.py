@@ -39,7 +39,7 @@ print("List updates successful!\n")
 
 ### Pushing to Github
 
-def git_add_commit_push(repo_path, commit_message, remote_name = 'origin', branch = 'main'):
+def git_add_commit_push(repo_path, commit_message, remote_name = 'origin', branch = 'master'):
     """
     Add, commit, and push using GitPython.
 
