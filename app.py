@@ -102,7 +102,6 @@ if mode == 'Universal Solver':
                 wordle_wizard(word_list = official_words, max_guesses = 6, guess = starting_word, target = target_word, random_guess = False, random_target = False, verbose = True, drama = 0, return_stats = False, record = False)
 
                 st.write("Curious about what the number beside each word means? Click the button below to find out!")
-
                                  
                 if mode_chosen:
 
@@ -255,7 +254,7 @@ elif mode == 'Daily Puzzle Assistant':
             st.session_state.num_guesses = num_guesses  # Update the session state
 
     # Display the Abracadabra button
-    daily_sol_button = daily_sol_button_placeholder.button('Abracadabra', key="button2_assistant")
+    daily_sol_button = button('Abracadabra', key="button2_assistant")
 
     # Handle the click event of the Abracadabra button
     if daily_sol_button:
