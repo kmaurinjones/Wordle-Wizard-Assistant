@@ -309,9 +309,9 @@ elif mode == 'Daily Puzzle Assistant':
     # Reset the abracadabra_clicked state after using it
     if st.session_state.abracadabra_clicked:
         st.session_state.abracadabra_clicked = False
-        # if len(num_guesses) > len(guesses):
-        #     guesses[]
-        
+    
+        st.experimental_rerun()
+
         # Check validity of guesses
         valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
         
