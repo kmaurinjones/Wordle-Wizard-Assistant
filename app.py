@@ -227,19 +227,60 @@ elif mode == 'Daily Puzzle Assistant':
     #             num_guesses += 1
 
 
+    # # Function to check the validity of each guess
+    # def is_alphanumeric_and_of_length_5(guess):
+    #     stripped_guess = guess.strip()
+    #     return stripped_guess.isalpha() and len(stripped_guess) == 5
+
+    # # Initialize list to hold the actual guesses
+    # guesses = []
+
+    # # Initialize number of guesses
+    # num_guesses = st.session_state.get('num_guesses', 1)
+
+    # # Render text boxes
+    # for i in range(num_guesses):
+    #     new_guess = st.text_input(f"Guess #{i + 1}", key=f"guess_{i}")
+    #     if len(guesses) <= i:
+    #         guesses.append(new_guess)
+    #     else:
+    #         guesses[i] = new_guess
+
+    # # Display the Add Another Guess button if fewer than 6 text input boxes are shown
+    # if num_guesses < 6:
+    #     add_another_guess = st.button("Add Another Guess")
+    #     if add_another_guess:
+    #         num_guesses += 1
+    #         st.session_state.num_guesses = num_guesses  # Update the session state
+
+    # # Display the Abracadabra button
+    # daily_sol_button = button('Abracadabra', key="button2_assistant")
+
+    # # Handle the click event of the Abracadabra button
+    # if daily_sol_button:
+    #     # Filter out empty guesses
+    #     guesses = [guess for guess in guesses if len(guess.strip()) > 0]
+
+    #     ### REMOVE EXTRA BOXES HERE ###
+
+
     # Function to check the validity of each guess
     def is_alphanumeric_and_of_length_5(guess):
         stripped_guess = guess.strip()
         return stripped_guess.isalpha() and len(stripped_guess) == 5
 
+    # Initialize session state if not already initialized
+    if 'num_guesses' not in st.session_state:
+        st.session_state.num_guesses = 1
+
+    if 'abracadabra_clicked' not in st.session_state:
+        st.session_state.abracadabra_clicked = False
+
     # Initialize list to hold the actual guesses
     guesses = []
 
-    # Initialize number of guesses
-    num_guesses = st.session_state.get('num_guesses', 1)
-
-    # Render text boxes
-    for i in range(num_guesses):
+    # Render text boxes based on the state
+    for i in range(st.session_state.num_guesses):
         new_guess = st.text_input(f"Guess #{i + 1}", key=f"guess_{i}")
         if len(guesses) <= i:
             guesses.append(new_guess)
@@ -247,19 +288,29 @@ elif mode == 'Daily Puzzle Assistant':
             guesses[i] = new_guess
 
     # Display the Add Another Guess button if fewer than 6 text input boxes are shown
-    if num_guesses < 6:
+    if st.session_state.num_guesses < 6:
         add_another_guess = st.button("Add Another Guess")
         if add_another_guess:
-            num_guesses += 1
-            st.session_state.num_guesses = num_guesses  # Update the session state
+            st.session_state.num_guesses += 1
 
     # Display the Abracadabra button
-    daily_sol_button = button('Abracadabra', key="button2_assistant")
+    daily_sol_button = st.button('Abracadabra', key="button2_assistant")
 
     # Handle the click event of the Abracadabra button
     if daily_sol_button:
+        st.session_state.abracadabra_clicked = True
+
         # Filter out empty guesses
         guesses = [guess for guess in guesses if len(guess.strip()) > 0]
+
+        # Update num_guesses to reflect the number of non-empty guesses
+        st.session_state.num_guesses = len(guesses)
+
+    # Reset the abracadabra_clicked state after using it
+    if st.session_state.abracadabra_clicked:
+        st.session_state.abracadabra_clicked = False
+        # if len(num_guesses) > len(guesses):
+        #     guesses[]
         
         # Check validity of guesses
         valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
