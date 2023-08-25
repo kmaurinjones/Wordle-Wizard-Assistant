@@ -214,7 +214,8 @@ elif mode == 'Daily Puzzle Assistant':
                 new_container = st.empty()
                 containers.append(new_container)
 
-            new_guess = containers[i].text_input(f"Guess #{i + 1}", "")
+            # new_guess = containers[i].text_input(f"Guess #{i + 1}", "")
+            new_guess = containers[i].text_input(f"Guess #{i + 1}", key=f"guess_{i}")
             if len(guesses) <= i:
                 guesses.append(new_guess)
             else:
