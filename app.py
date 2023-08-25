@@ -159,74 +159,132 @@ elif mode == 'Daily Puzzle Assistant':
             print(target_word)
             break
 
-    #### USER PROVIDING GUESSES ####
-    # num_guesses = st.sidebar.selectbox(
-    num_guesses = st.selectbox(
-        'How many guesses would you like to submit?',
-        (1, 2, 3, 4, 5, 6))
+################################################################################################
 
-    guesses = []
-    for i in range(num_guesses):
-        input_guess = st.text_input(f"Guess #{i+1}", '')
-        guesses.append(input_guess.strip().lower())
-        st.write(f"Guess #{i+1}: {input_guess}")
+### OLD CODE
 
-    #### CHECKING THAT ALL GUESSES ARE VALID
+    # #### USER PROVIDING GUESSES ####
+    # # num_guesses = st.sidebar.selectbox(
+    # num_guesses = st.selectbox(
+    #     'How many guesses would you like to submit?',
+    #     (1, 2, 3, 4, 5, 6))
+
+    # guesses = []
+    # for i in range(num_guesses):
+    #     input_guess = st.text_input(f"Guess #{i+1}", '')
+    #     guesses.append(input_guess.strip().lower())
+    #     st.write(f"Guess #{i+1}: {input_guess}")
+
+    # #### CHECKING THAT ALL GUESSES ARE VALID
+    # def is_alphanumeric_and_of_length_5(guess):
+    #     stripped_guess = guess.strip()
+    #     return stripped_guess.isalpha() and len(stripped_guess) == 5 # no punctuation, no numbers, 5 letters in length
+
+    # # guesses = ["guess1", "guess 2", "guess3 ", " guess4", "guess5"]
+    # valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
+
+################################################################################################
+
+### NEW CODE
+
+    # Function to check the validity of each guess
     def is_alphanumeric_and_of_length_5(guess):
         stripped_guess = guess.strip()
-        return stripped_guess.isalpha() and len(stripped_guess) == 5 # no punctuation, no numbers, 5 letters in length
+        return stripped_guess.isalpha() and len(stripped_guess) == 5
 
-    # guesses = ["guess1", "guess 2", "guess3 ", " guess4", "guess5"]
-    valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
+    # Initialize list to hold the containers for the text input boxes
+    containers = []
 
-    daily_sol_button = button('Abracadabra', key = "button2_assistant")
+    # Initialize list to hold the actual guesses
+    guesses = []
 
-    ### Solving
-    # solve_button = st.button('Abracadabra')
-    if daily_sol_button: # button to make everything run
-        
-        #### CHECKING ALL GUESSES ARE LEGAL
-        if not valid_guesses:
-            st.write("Please check again that each guess only contains letters and is 5 letters in length. Once you have, click 'Abracadabra' to get feedback.")
+    # Initialize number of guesses
+    num_guesses = 1
 
-        else: # if everything is legal, proceed to solving
+    # Initialize placeholder for Add Another Guess button
+    add_guess_placeholder = st.empty()
 
-            #### ADDING UNSEEN WORDS TO OFFICIAL LIST (THIS SHOULD MINIMIZE OVERALL ERRORS)
-            for word in guesses:
-                if word not in guesses:
-                    official_words.append(word)
+    # Initialize placeholder for Abracadabra button
+    daily_sol_button_placeholder = st.empty()
 
-            #### RUN ALGORITHM
-            wordle_wizard_cheat(guesses = guesses, word_list = official_words, max_guesses = 6, 
-                            target = target_word,
-                            random_guess = False, random_target = False, 
-                            verbose = True, drama = 0, return_stats = False, record = False)
+    while True:
+        # Render text boxes and add to containers list
+        for i in range(num_guesses):
+            if i >= len(containers):
+                new_container = st.empty()
+                containers.append(new_container)
+
+            new_guess = containers[i].text_input(f"Guess #{i + 1}", "")
+            if len(guesses) <= i:
+                guesses.append(new_guess)
+            else:
+                guesses[i] = new_guess
+
+        # Display the Add Another Guess button if fewer than 6 text input boxes are shown
+        if num_guesses < 6:
+            add_another_guess = add_guess_placeholder.button("Add Another Guess")
+            if add_another_guess:
+                num_guesses += 1
+
+        # Display the Abracadabra button
+        daily_sol_button = daily_sol_button_placeholder.button('Abracadabra', key="button2_assistant")
+
+        # Handle the click event of the Abracadabra button
+        if daily_sol_button:
+            # Filter out empty guesses
+            guesses = [guess for guess in guesses if len(guess.strip()) > 0]
             
-            st.write("Curious about what the number beside each word means? Click the button below to find out!")
-                        
-            if mode_chosen:
+            # Check validity of guesses
+            valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
+            
+    # daily_sol_button = button('Abracadabra', key = "button2_assistant")
 
-                # if button('Abracadabra', key = "button2_universal"): # button to make everything run
-                if univers_button or daily_sol_button:
+    # ### Solving
+    # # solve_button = st.button('Abracadabra')
+    # if daily_sol_button: # button to make everything run
+            
+            #### CHECKING ALL GUESSES ARE LEGAL
+            if not valid_guesses:
+                st.write("Please check again that each guess only contains letters and is 5 letters in length. Once you have, click 'Abracadabra' to get feedback.")
 
-                    # st.write("Curious about what the number beside each word means? Click the button below to find out!")
-                    # post-solution prompt
+            else: # if everything is legal, proceed to solving
 
-                    # show plot and info
-                    if button(label = "More info", key = "button3"):
-                        
-                        # show plot of letters distribution
-                        count_plot()
+                #### ADDING UNSEEN WORDS TO OFFICIAL LIST (THIS SHOULD MINIMIZE OVERALL ERRORS)
+                for word in guesses:
+                    if word not in guesses:
+                        official_words.append(word)
 
-                        st.write("This is a distribution of the frequencies of all letters in the Wordle word list used in this app. The higher a given letter's count is, the more likely it is that that letter will be able to tell us something about the target word in a Wordle puzzle.\n")
-                        st.write("The rating of each word corresponds to approximately the percentage of all words of the ~2300 words of the list used for this game in which the given word's letters appear. This means that, for a word with a rating of 30, its letters show up in 30\% of the words of the entire word list. Since we cannot possibly have all 26 letters of the English alphabet in one 5-letter word, this rating can only really be used to compare one word to another. Using more highly-rated words should generally result in getting to the target word in fewer guesses than using lower-rated words.\n")
+                #### RUN ALGORITHM
+                wordle_wizard_cheat(guesses = guesses, word_list = official_words, max_guesses = 6, 
+                                target = target_word,
+                                random_guess = False, random_target = False, 
+                                verbose = True, drama = 0, return_stats = False, record = False)
+                
+                st.write("Curious about what the number beside each word means? Click the button below to find out!")
+                            
+                if mode_chosen:
 
-                        # show plot of best and worst words
-                        words_plot()
+                    # if button('Abracadabra', key = "button2_universal"): # button to make everything run
+                    if univers_button or daily_sol_button:
 
-                        st.write("By this same rating system, here are the top 5 words, the middle 5 words, and the worst 5 words of the entire Wordle word list in terms of their respective ratings.\n\n")
-                        st.write("If you're interested in learning more about the theory of how Wordle Wizard actually works, check out this blog post (https://medium.com/@kmaurinjones/how-i-beat-wordle-once-and-for-all-322c8641a70d), that describes everything mentioned here (and more!) in greater detail.\n")
+                        # st.write("Curious about what the number beside each word means? Click the button below to find out!")
+                        # post-solution prompt
 
-                        st.write("-----------------------------\n")
+                        # show plot and info
+                        if button(label = "More info", key = "button3"):
+                            
+                            # show plot of letters distribution
+                            count_plot()
+
+                            st.write("This is a distribution of the frequencies of all letters in the Wordle word list used in this app. The higher a given letter's count is, the more likely it is that that letter will be able to tell us something about the target word in a Wordle puzzle.\n")
+                            st.write("The rating of each word corresponds to approximately the percentage of all words of the ~2300 words of the list used for this game in which the given word's letters appear. This means that, for a word with a rating of 30, its letters show up in 30\% of the words of the entire word list. Since we cannot possibly have all 26 letters of the English alphabet in one 5-letter word, this rating can only really be used to compare one word to another. Using more highly-rated words should generally result in getting to the target word in fewer guesses than using lower-rated words.\n")
+
+                            # show plot of best and worst words
+                            words_plot()
+
+                            st.write("By this same rating system, here are the top 5 words, the middle 5 words, and the worst 5 words of the entire Wordle word list in terms of their respective ratings.\n\n")
+                            st.write("If you're interested in learning more about the theory of how Wordle Wizard actually works, check out this blog post (https://medium.com/@kmaurinjones/how-i-beat-wordle-once-and-for-all-322c8641a70d), that describes everything mentioned here (and more!) in greater detail.\n")
+
+                            st.write("-----------------------------\n")
 
 st.write("\nThanks for checking out Wordle Wizard! If you have any feedback or requests for additions to this app, shoot me an email at kmaurinjones@gmail.com.")
