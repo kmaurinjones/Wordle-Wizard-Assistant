@@ -7,7 +7,6 @@ from plots import * # for plots
 from bs4 import BeautifulSoup
 import requests
 
-
 ### Page header
 st.title("Wordle Wizard 🧙")
 
@@ -263,7 +262,6 @@ elif mode == 'Daily Puzzle Assistant':
 
     #     ### REMOVE EXTRA BOXES HERE ###
 
-
     # Function to check the validity of each guess
     def is_alphanumeric_and_of_length_5(guess):
         stripped_guess = guess.strip()
@@ -281,7 +279,7 @@ elif mode == 'Daily Puzzle Assistant':
 
     # Render text boxes based on the state
     for i in range(st.session_state.num_guesses):
-        new_guess = st.text_input(f"Guess #{i + 1}", key=f"guess_{i}")
+        new_guess = st.text_input(f"Guess #{i + 1}", key = f"guess_{i}")
         if len(guesses) <= i:
             guesses.append(new_guess)
         else:
@@ -296,7 +294,7 @@ elif mode == 'Daily Puzzle Assistant':
     st.write("Once you have entered your guesses, click the button below.")
 
     # Display the Abracadabra button
-    daily_sol_button = st.button('Abracadabra', key="button2_assistant")
+    daily_sol_button = st.button('Abracadabra', key = "button2_assistant")
 
     # Handle the click event of the Abracadabra button
     if daily_sol_button:
