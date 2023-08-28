@@ -279,7 +279,7 @@ elif mode == 'Daily Puzzle Assistant':
 
     # Render text boxes based on the state
     for i in range(st.session_state.num_guesses):
-        new_guess = st.text_input(f"Guess #{i + 1}", key = f"guess_{i}")
+        new_guess = st.text_input(f"Guess #{i + 1}", key = f"guess_{i}").lower().strip()
         if len(guesses) <= i:
             guesses.append(new_guess)
         else:
