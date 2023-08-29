@@ -281,9 +281,9 @@ elif mode == 'Daily Puzzle Assistant':
     for i in range(st.session_state.num_guesses):
         new_guess = st.text_input(f"Guess #{i + 1}", key = f"guess_{i}").lower().strip()
         if len(guesses) <= i:
-            guesses.append(new_guess)
+            guesses.append(new_guess.lower().strip())
         else:
-            guesses[i] = new_guess
+            guesses[i] = new_guess.lower().strip()
 
     # Display the Add Another Guess button if fewer than 6 text input boxes are shown
     if st.session_state.num_guesses < 6:
