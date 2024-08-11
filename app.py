@@ -157,7 +157,8 @@ elif mode == 'Daily Puzzle Assistant':
     if st.button("Add Another Guess"):
         if st.session_state.num_guesses < 6:
             st.session_state.num_guesses += 1
-            st.experimental_rerun()
+            # st.experimental_rerun()
+            st.rerun()
 
     with st.form(key='daily_puzzle_assistant_form'):
         guesses = []
