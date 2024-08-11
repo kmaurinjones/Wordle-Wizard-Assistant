@@ -150,7 +150,7 @@ elif mode == 'Daily Puzzle Assistant':
 
     try:    
         # make API call to get today's word
-        wordle_api_url = f"https://api.wordle.app/api/v1/words/{today}"
+        wordle_api_url = f"https://www.nytimes.com/svc/wordle/v2/{today}.json"
         response = requests.get(wordle_api_url)
         response.raise_for_status()
         response = response.json()
