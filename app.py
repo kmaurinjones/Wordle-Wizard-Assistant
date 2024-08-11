@@ -1,10 +1,11 @@
+from datetime import datetime
 import streamlit as st
 from streamlit_extras.stateful_button import button # for button that can maintain its clicked state
 import random # for showing random words
 from wordle_assistant_functions import * # for wordle solving
 import plotly.express as px # for plots
 from plots import * # for plots
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 import requests
 
 ### Page header
@@ -25,7 +26,12 @@ for i in range(0, 20):
     word = official_words[ran_int]
     sugg_words.append(word)
 
-mode = st.selectbox('Select Mode', ('Daily Puzzle Assistant', 'Universal Solver'))
+# mode = st.selectbox('Select Mode', ('Daily Puzzle Assistant', 'Universal Solver'))
+
+# convert the above to a sidebar
+mode = st.sidebar.selectbox('Select Mode', ('Daily Puzzle Assistant', 'Universal Solver'))
+
+# initialize mode_chosen variable
 mode_chosen = False
 
 if mode == 'Universal Solver':
@@ -135,133 +141,25 @@ elif mode == 'Daily Puzzle Assistant':
 
     mode_chosen = True
     univers_button = False
+    
     # Code for Daily Puzzle Assistant
-
     st.header("Daily Puzzle Assistant")
 
-    url = "https://www.tomsguide.com/news/what-is-todays-wordle-answer"
+    # get today's date in YYYY-MM-DD format
+    today = datetime.today().strftime('%Y-%m-%d')
 
-    response = requests.get(url)
+    try:    
+        # make API call to get today's word
+        wordle_api_url = f"https://api.wordle.app/api/v1/words/{today}"
+        response = requests.get(wordle_api_url)
+        response.raise_for_status()
+        response = response.json()
 
-    if response.status_code != 200:
-        raise ConnectionError ("There was an error loading the solutions webpage.\nReload this page and try again, and if this issue persists, please contact me at kmaurinjones@gmail.com")
-
-    soup = BeautifulSoup(response.content, "html.parser")
-
-    paras = soup.find_all("p")
-    for para in paras:
-        text = para.text
-        bolds = [word.replace(".", "").strip() for word in text.split() if word.replace(".", "").strip().isupper()]
-        if len(bolds) == 1 and len(bolds[0]) == 5:
-            target_word = bolds[0]
-            print(target_word)
-            break
-
-################################################################################################
-
-### OLD CODE
-
-    # #### USER PROVIDING GUESSES ####
-    # # num_guesses = st.sidebar.selectbox(
-    # num_guesses = st.selectbox(
-    #     'How many guesses would you like to submit?',
-    #     (1, 2, 3, 4, 5, 6))
-
-    # guesses = []
-    # for i in range(num_guesses):
-    #     input_guess = st.text_input(f"Guess #{i+1}", '')
-    #     guesses.append(input_guess.strip().lower())
-    #     st.write(f"Guess #{i+1}: {input_guess}")
-
-    # #### CHECKING THAT ALL GUESSES ARE VALID
-    # def is_alphanumeric_and_of_length_5(guess):
-    #     stripped_guess = guess.strip()
-    #     return stripped_guess.isalpha() and len(stripped_guess) == 5 # no punctuation, no numbers, 5 letters in length
-
-    # # guesses = ["guess1", "guess 2", "guess3 ", " guess4", "guess5"]
-    # valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
-
-################################################################################################
-
-### NEW CODE
-
-    # # Function to check the validity of each guess
-    # def is_alphanumeric_and_of_length_5(guess):
-    #     stripped_guess = guess.strip()
-    #     return stripped_guess.isalpha() and len(stripped_guess) == 5
-
-    # # Initialize list to hold the containers for the text input boxes
-    # containers = []
-
-    # # Initialize list to hold the actual guesses
-    # guesses = []
-
-    # # Initialize number of guesses
-    # num_guesses = 1
-
-    # # Initialize placeholder for Add Another Guess button
-    # add_guess_placeholder = st.empty()
-
-    # # Initialize placeholder for Abracadabra button
-    # daily_sol_button_placeholder = st.empty()
-
-    # while True:
-    #     # Render text boxes and add to containers list
-    #     for i in range(num_guesses):
-    #         if i >= len(containers):
-    #             new_container = st.empty()
-    #             containers.append(new_container)
-
-    #         # new_guess = containers[i].text_input(f"Guess #{i + 1}", "")
-    #         new_guess = containers[i].text_input(f"Guess #{i + 1}", key=f"guess_{i}")
-    #         new_guess = new_guess.lower().strip()
-    #         if len(guesses) <= i:
-    #             guesses.append(new_guess.lower().strip())
-    #         else:
-    #             guesses[i] = new_guess.lower().strip()
-
-    #     # Display the Add Another Guess button if fewer than 6 text input boxes are shown
-    #     if num_guesses < 6:
-    #         add_another_guess = add_guess_placeholder.button("Add Another Guess")
-    #         if add_another_guess:
-    #             num_guesses += 1
-
-
-    # # Function to check the validity of each guess
-    # def is_alphanumeric_and_of_length_5(guess):
-    #     stripped_guess = guess.strip()
-    #     return stripped_guess.isalpha() and len(stripped_guess) == 5
-
-    # # Initialize list to hold the actual guesses
-    # guesses = []
-
-    # # Initialize number of guesses
-    # num_guesses = st.session_state.get('num_guesses', 1)
-
-    # # Render text boxes
-    # for i in range(num_guesses):
-    #     new_guess = st.text_input(f"Guess #{i + 1}", key=f"guess_{i}")
-    #     if len(guesses) <= i:
-    #         guesses.append(new_guess)
-    #     else:
-    #         guesses[i] = new_guess
-
-    # # Display the Add Another Guess button if fewer than 6 text input boxes are shown
-    # if num_guesses < 6:
-    #     add_another_guess = st.button("Add Another Guess")
-    #     if add_another_guess:
-    #         num_guesses += 1
-    #         st.session_state.num_guesses = num_guesses  # Update the session state
-
-    # # Display the Abracadabra button
-    # daily_sol_button = button('Abracadabra', key="button2_assistant")
-
-    # # Handle the click event of the Abracadabra button
-    # if daily_sol_button:
-    #     # Filter out empty guesses
-    #     guesses = [guess for guess in guesses if len(guess.strip()) > 0]
-
-    #     ### REMOVE EXTRA BOXES HERE ###
+        # parse the response
+        target_word = response['solution'].strip().lower()
+    except:
+        st.write("There was an error fetching today's Wordle word. Please try again later.")
+        st.stop()
 
     # Function to check the validity of each guess
     def is_alphanumeric_and_of_length_5(guess):
