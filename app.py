@@ -157,20 +157,19 @@ elif mode == 'Daily Puzzle Assistant':
     if st.button("Add Another Guess"):
         if st.session_state.num_guesses < 6:
             st.session_state.num_guesses += 1
-            # st.experimental_rerun()
             st.rerun()
 
     with st.form(key='daily_puzzle_assistant_form'):
         guesses = []
         for i in range(st.session_state.num_guesses):
             new_guess = st.text_input(f"Guess #{i + 1}", key=f"guess_{i}")
-            guesses.append(new_guess.lower().strip())
+            guesses.append(new_guess.strip().lower())
 
         daily_sol_button = st.form_submit_button('Abracadabra')
 
     if daily_sol_button:
         # Filter out empty guesses
-        guesses = [guess for guess in guesses if len(guess.strip()) > 0]
+        guesses = [guess for guess in guesses if guess]
 
         # Update num_guesses to reflect the number of non-empty guesses
         st.session_state.num_guesses = len(guesses)
