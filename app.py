@@ -47,55 +47,38 @@ elif mode == 'Daily Puzzle Assistant':
     that perfectly complements the words you've already tried. Like a little robot assistant!
     """)
 
-# then you can use the 'mode' variable to determine which block of code to run
 if mode == 'Universal Solver':
-
     mode_chosen = True
     daily_sol_button = False
-    # Code for Universal Solver
 
     st.header("Universal Solver")
 
-    # if mode 1 is chosen, do the following
-
-    ### for guess length validation of both guesses
-    valid_guesses = True
-        
-    ### Generate Examples Button
     st.write('Please enter a starting word and a target word, and click the "Abracadabra" button to have the puzzle solved.\n')
     st.write('If you would like some examples of words you can use, click the button below.\n')
 
-    if st.button('Show Me Words', key = "button1"):
+    if st.button('Show Me Words', key="button1"):
         st.write(f"There are {len(official_words)} in the official Wordle word list. Here are {len(sugg_words)} of them.")
         st.write(f"{sugg_words}\n")
 
-    # user starting word
-    # starting_word = st.sidebar.text_input("Enter starting word here")
-    starting_word = st.text_input("Enter starting word here")
-    starting_word = starting_word.strip().replace(" ", "").lower()
-    if len(starting_word) != 5:
-        valid_guesses = False
-        st.write('Please double check and make sure there are exactly 5 letters in the starting word.\n')
+    with st.form(key='universal_solver_form'):
+        starting_word = st.text_input("Enter starting word here")
+        target_word = st.text_input("Enter target word here")
+        univers_button = st.form_submit_button('Abracadabra')
 
-    # user target word
-    # target_word = st.sidebar.text_input("Enter target word here")
-    target_word = st.text_input("Enter target word here")
-    target_word = target_word.strip().replace(" ", "").lower()
-    if len(target_word) != 5:
-        valid_guesses = False
-        st.write('Please double check and make sure there are exactly 5 letters in the target word.\n')
+    if univers_button:
+        starting_word = starting_word.strip().replace(" ", "").lower()
+        target_word = target_word.strip().replace(" ", "").lower()
+        
+        valid_guesses = len(starting_word) == 5 and len(target_word) == 5
 
-    univers_button = button('Abracadabra', key = "button2_universal")
-
-    ### Solving
-    # solve_button = st.button('Abracadabra')
-    if univers_button: # button to make everything run
-        if valid_guesses == True: # ensure words are the correct lengths
-            
+        if not valid_guesses:
+            st.write('Please double check and make sure there are exactly 5 letters in both the starting word and the target word.\n')
+        elif not (starting_word.isalpha() and target_word.isalpha()):
+            st.write("Please check again that the starting word and target word only contain letters and are both 5 letters in length. Once they are, click the 'Abracadabra' button once more.")
+        else:
             # if (starting_word.isalpha() and target_word.isalpha()): # checking there's no punctuation
             if not (starting_word.isalpha() and target_word.isalpha()): # if the passed words don't check every criterion
                 st.write("Please check again that the starting word and target word only contain letter and are both 5 letters in length. Once they are, click the 'Abracadabra' button once more.")
-            
             else: # if all is right in the wordle wizard world
                 # if either of them isn't in the list, temporarily add them to the list. This doesn't impact things much and will save a ton of error headaches
                 if starting_word not in official_words:
@@ -161,8 +144,8 @@ elif mode == 'Daily Puzzle Assistant':
         st.write("There was an error fetching today's Wordle word. Please try again later.")
         st.stop()
 
-    # Function to check the validity of each guess
     def is_alphanumeric_and_of_length_5(guess):
+        """Checks if a guess is alphanumeric and of length 5."""
         stripped_guess = guess.strip()
         return stripped_guess.isalpha() and len(stripped_guess) == 5
 
@@ -170,62 +153,33 @@ elif mode == 'Daily Puzzle Assistant':
     if 'num_guesses' not in st.session_state:
         st.session_state.num_guesses = 1
 
-    if 'abracadabra_clicked' not in st.session_state:
-        st.session_state.abracadabra_clicked = False
-
-    # Initialize list to hold the actual guesses
-    guesses = []
-
-    # Render text boxes based on the state
-    for i in range(st.session_state.num_guesses):
-        new_guess = st.text_input(f"Guess #{i + 1}", key = f"guess_{i}").lower().strip()
-        if len(guesses) <= i:
-            guesses.append(new_guess.lower().strip())
-        else:
-            guesses[i] = new_guess.lower().strip()
-
-    # Display the Add Another Guess button if fewer than 6 text input boxes are shown
-    if st.session_state.num_guesses < 6:
-        add_another_guess = st.button("Add Another Guess")
-        if add_another_guess:
+    # Add Another Guess button (outside the form)
+    if st.button("Add Another Guess"):
+        if st.session_state.num_guesses < 6:
             st.session_state.num_guesses += 1
+            st.experimental_rerun()
 
-    st.write("Once you have entered your guesses, click the button below.")
+    with st.form(key='daily_puzzle_assistant_form'):
+        guesses = []
+        for i in range(st.session_state.num_guesses):
+            new_guess = st.text_input(f"Guess #{i + 1}", key=f"guess_{i}")
+            guesses.append(new_guess.lower().strip())
 
-    # Display the Abracadabra button
-    daily_sol_button = st.button('Abracadabra', key = "button2_assistant")
+        daily_sol_button = st.form_submit_button('Abracadabra')
 
-    # Handle the click event of the Abracadabra button
     if daily_sol_button:
-        st.session_state.abracadabra_clicked = True
-
         # Filter out empty guesses
         guesses = [guess for guess in guesses if len(guess.strip()) > 0]
 
         # Update num_guesses to reflect the number of non-empty guesses
         st.session_state.num_guesses = len(guesses)
 
-    # Reset the abracadabra_clicked state after using it
-    if st.session_state.abracadabra_clicked:
-        st.session_state.abracadabra_clicked = False
-    
-        # st.experimental_rerun()
-
         # Check validity of guesses
         valid_guesses = all(is_alphanumeric_and_of_length_5(guess) for guess in guesses)
-        
-# daily_sol_button = button('Abracadabra', key = "button2_assistant")
 
-# ### Solving
-# # solve_button = st.button('Abracadabra')
-# if daily_sol_button: # button to make everything run
-        
-        #### CHECKING ALL GUESSES ARE LEGAL
         if not valid_guesses:
             st.write("Please check again that each guess only contains letters and is 5 letters in length. Once you have, click 'Abracadabra' to get feedback.")
-
         else: # if everything is legal, proceed to solving
-
             #### ADDING UNSEEN WORDS TO OFFICIAL LIST (THIS SHOULD MINIMIZE OVERALL ERRORS)
             for word in guesses:
                 if word not in guesses:
