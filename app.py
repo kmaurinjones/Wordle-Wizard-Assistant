@@ -29,7 +29,7 @@ for i in range(0, 20):
 # mode = st.selectbox('Select Mode', ('Daily Puzzle Assistant', 'Universal Solver'))
 
 # convert the above to a sidebar
-mode = st.sidebar.selectbox('Select Mode', ('Daily Puzzle Assistant', 'Universal Solver'))
+mode = st.sidebar.selectbox('Select Mode', ('Universal Solver', 'Daily Puzzle Assistant'))
 
 # initialize mode_chosen variable
 mode_chosen = False
