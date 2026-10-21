@@ -2,4 +2,4 @@ plotly
 streamlit-extras
 # beautifulsoup4==4.11.1
 beautifulsoup4
-selenium==4.9.0
+selenium==4.14.0
